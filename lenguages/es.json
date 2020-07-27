@@ -1,0 +1,53 @@
+{
+	"petitions": {
+		"GET": "Peticion exitosa",
+		"POST": "Creacion exitosa",
+		"PUT": "Actualizacion exitosa",
+		"DELETE": "Eliminacion exitosa",
+		"login_successful": "Iniciando sesion"
+	},
+	"validations": {
+		"general": {
+			"empty_request": "La peticion esta vacia"
+		},
+		"users": {
+			"name_required": "El nombre es requerido",
+			"email_required": "El correo electronico es requerido",
+			"format_invalid_email": "El formato del correo no es valido",
+			"last_name_required": "Los apellidos son requeridos",
+			"rol_id_required": "El rol id es requerido",
+			"user_already_exist": "El usuario ya esta registrado",
+			"email_already_exist": "El correo ya esta registrado"
+		},
+		"roles": {
+			"users_is_required": "Los accesos a usuarios son requeridos",
+			"roles_is_required": "Los accesos a roles son requeridos",
+			"images_is_required": "Los accesos a imagenes son requeridos",
+			"categories_images_is_required": "Los accesos a las categorias de imagenes son requeridos",
+			"read_is_required": "El accesos de leectura es requerido",
+			"write_is_required": "El accesos de escritura es requerido",
+			"name_is_required": "El nombre del rol es requerido",
+			"access_invalids": "Los accesos a los modulos son requeridos"
+		},
+		"auth": {
+			"before_password_required": "La contraseña anterior es requerida",
+			"new_password_required": "La nueva contraseña es requerida",
+			"repeat_new_password_required": "La repeticion de la nueva contraseña es requerida",
+			"user_required": "El usuario es requerido",
+			"password_required": "La contraseña es requerida",
+			"format_invalid_email": "El formato del correo no es valido"
+		}
+	},
+	"errors": {
+		"not_found": "Problemas en el servidor",
+		"auth": {
+			"invalid_credentials": "Credenciales invalidas",
+			"user_locked": "Usuario dado de baja",
+			"unauthorized": "Sin auntorizacion",
+			"unregistered": "Usuario no registrado",
+			"password_not_same_previous": "La contraseña no es igual a la anterior",
+			"passwords_not_same": "Las contraseñas repetidas no son iguales"
+		},
+		"users": {}
+	}
+}
