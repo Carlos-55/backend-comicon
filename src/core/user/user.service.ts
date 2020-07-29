@@ -32,7 +32,6 @@ export class UserService extends SequelizeCrudService<User, UserDTO> {
 			where: {
 				[Op.or]: [
 					{ email: user },
-					{ user: user },
 				]
 			}
 		})

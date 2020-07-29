@@ -9,15 +9,15 @@ export class UserDTO {
 	id?: number
 
 	@ApiModelProperty({ description: 'name to user DTO' })
-	@IsString({ message: 'users.name_required' })
+	//@IsString({ message: 'users.name_required' })
 	name?: string;
 
 	@ApiModelProperty({ description: 'user to user DTO' })
-	@IsString({ message: 'El apellido es requerido' })
+	// @IsString({ message: 'El apellido es requerido' })
 	paternSurname?: string;
 
 	@ApiModelProperty({ description: 'user to user DTO' })
-	@IsString({ message: 'El usuario es requerido' })
+	// @IsString({ message: 'El usuario es requerido' })
 	maternSurname?: string;
 	
 	@ApiModelProperty({ description: 'user to user DTO' })
@@ -42,16 +42,7 @@ export class UserDTO {
 	// @IsString({ message: 'Contraseña requerida' })
 	password?: string;
 
-
-	@ApiModelProperty({ description: 'rol to user DTO' })
-	@IsNumber({}, { message: 'users.rol_id_required' })
-	rol: number;
-	// @ApiModelProperty({ description: 'rol to user DTO' })
-	// @IsNumber({}, { message: 'users.rol_id_required' })
-	// rolId?: number;
-
-	// @ApiModelProperty({ description: 'rol to user DTO', required: false, type: RolDTO })
-	// rol?: RolDTO;
-//
+	@ApiModelProperty({ description: 'photo to user DTO' })
+	photo?: string;
 }
 

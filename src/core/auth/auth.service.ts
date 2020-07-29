@@ -58,11 +58,11 @@ export class AuthService {
 			birthdate: user.birthdate,
 			email: user.email,
 			cellphone: user.cellphone,
-			user: user.user,
 			password: user.password,
+			photo: user.photo
 			//rol: user.rol
 		}
-		if (!user.user) {
+		if (!user.email) {
 			throw new HttpException(
 				{
 					error: 'errors.auth.user_locked',
@@ -114,8 +114,8 @@ export class AuthService {
 			birthdate: user.birthdate,
 			email: user.email,
 			cellphone: user.cellphone,
-			user: user.user,
 			password: user.password,
+			photo: user.photo
 			//rol: user.rol
 			}
 
@@ -151,8 +151,8 @@ export class AuthService {
 			birthdate: user.birthdate,
 			email: user.email,
 			cellphone: user.cellphone,
-			user: user.user,
 			password: user.password,
+			photo: user.photo
 			//rol: user.rol
 		}
 		return userLogged;

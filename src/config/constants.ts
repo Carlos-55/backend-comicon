@@ -3,7 +3,7 @@ import { extname } from 'path';
 import * as uuid from 'uuid/v4';
 
 export const API_URL: string = 'http://192.168.1.70:3000/api';
-export type Uploads = 'images' | 'pdfs' | 'xlsx';
+export type Uploads = 'images'| 'usr' | 'pdfs' | 'xlsx';
 
 /**
  * Generates storage multer
@@ -25,6 +25,21 @@ export const generateStorageMulter = (
 		fileSize: maxSize * 1024 * 1024,
 	},
 });
+export const generateStorageUser = (
+	type: Uploads = 'usr',
+	maxSize: number = 3,
+) => ({
+	storage: diskStorage({
+		destination: `./public/uploads/${type}`,
+		filename: (req, file, cb) => {
+			return cb(null, `${uuid()}${extname(file.originalname)}`);
+		},
+	}),
+	limits: {
+		fileSize: maxSize * 1024 * 1024,
+	},
+});
+
 /**
  * Generates password
  * @param size

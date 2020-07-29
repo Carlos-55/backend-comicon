@@ -1,17 +1,11 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Post,
-	Put,
-} from '@nestjs/common';
-import { ApiUseTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors, UploadedFiles, HttpException, HttpStatus } from '@nestjs/common';
+import { ApiUseTags, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { User } from '../../entities/User.entity';
 import { UserDTO } from './user.dto';
 import { UserService } from './user.service';
-
+import { AuthGuard } from '@nestjs/passport';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { generateStorageMulter, generateStorageUser } from '../../config/constants';
 /**
  * Controller users
  */
@@ -28,9 +22,8 @@ export class UserController {
 		'birthdate',
 		'email',
 		'cellphone',
-		'user',
 		'password',
-		'rol'
+		'photo'
 	];
 	constructor(private readonly users: UserService) {}
 	/**
@@ -48,6 +41,8 @@ export class UserController {
 	 * @param id
 	 * @returns by id
 	 */
+	@UseGuards(AuthGuard('jwt'))
+	@ApiBearerAuth()
 	@Get(':id')
 	async getById(@Param('id') id: number): Promise<User> {
 		return await this.users.getOne(id, { attributes: this.attributes });
@@ -69,10 +64,18 @@ export class UserController {
 	 * @returns update
 	 */
 	@Put(':id')
-	async update(
-		@Body() user: UserDTO,
-		@Param('id') id: number,
-	): Promise<User> {
+	@ApiConsumes('multipart/form-data')
+	@UseInterceptors(
+		FilesInterceptor('photo', 1, generateStorageMulter('images'),
+		)
+	)
+	async update(@Body() user: UserDTO,@Param('id') id: number, @UploadedFiles() photo): Promise<User> {
+		console.log(user, '=====', photo);
+		if (photo === undefined) {
+			user.photo = "";
+			return await this.users.update(user, id);
+		}
+		user.photo = photo[0] ? photo[0].filename : null
 		return await this.users.update(user, id);
 	}
 	/**

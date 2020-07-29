@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { BeforeCreate, BelongsTo, Column, DataType, DefaultScope, ForeignKey, Is, Table } from 'sequelize-typescript';
 import { General } from './General.entity';
-
+import moment = require('moment');
 /**
  * Entity user
  */
@@ -27,7 +27,12 @@ export class User extends General<User> {
 	@Column({ type: DataType.STRING(50), allowNull: false })
 	maternSurname: string;
 
-	@Column({ type: DataType.DATE, allowNull: false })
+	@Column({
+        allowNull: false,
+        get() {
+            return moment(this.getDataValue('birthdate')).format('YYYY/MM/DD');
+        }
+    })
 	birthdate: Date;
 
 	@Is(async function Unique(value: string) {
@@ -40,20 +45,16 @@ export class User extends General<User> {
 	@Column({ type: DataType.STRING, allowNull: false })
 	cellphone: string;
 
-	@Column({type: DataType.STRING, allowNull:false})
-	user:string;
-
 	@Column({ type: DataType.STRING(150), allowNull:false})
 	password?: string;
 
-	/**
-	 * Tipo  de roles --type  rol
-	 * 1. Administrador	-> admin
-	 * 2. Mecero	-->waiter
-	 */
-    @Column({ type: DataType.ENUM('1', '2'), allowNull: false })
-	rol: 1 | 2 
 	
+    @Column({ type: DataType.STRING(200), allowNull: true,
+        get(){
+           return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('photo')}` || ''; 
+       } })
+  	photo?: string;
+
 	@BeforeCreate
 	static async setPassword(instance: User) {
 		instance.password = await bcrypt.hashSync(instance.password, 10);

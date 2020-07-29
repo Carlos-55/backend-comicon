@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { ConfigService } from '../../config/config.service';
 import { Logger } from '../../entities/Logger.entity';
 import { User } from '../../entities/User.entity';
+import { Pubication } from '../../entities/Publication.entity';
 
 
 
@@ -21,7 +22,7 @@ export const databaseProviders = [
 				password: _config.get('SEQUELIZE_PASSWORD'),
 				database: _config.get('SEQUELIZE_DATABASE'),
 			});
-			sequelize.addModels([Logger, User ]);
+			sequelize.addModels([Logger, User, Pubication ]);
 			await sequelize.sync();
 			return sequelize;
 		},
