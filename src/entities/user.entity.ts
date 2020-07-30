@@ -1,16 +1,17 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { BeforeCreate, BelongsTo, Column, DataType, DefaultScope, ForeignKey, Is, Table } from 'sequelize-typescript';
+import { BeforeCreate, BelongsTo, Column, DataType, DefaultScope, ForeignKey, Is, Table, HasMany } from 'sequelize-typescript';
 import { General } from './General.entity';
 import moment = require('moment');
+import {Image} from './images.entity';
 /**
  * Entity user
  */
 @DefaultScope(() => ({
-	// include: [{
-	// 	model: Rol,
-	// 	required: false
-	// }]
+	include: [{
+		model: Image,
+		required: false
+	}]
 }))
 @Table({
 	paranoid: true,
@@ -49,11 +50,14 @@ export class User extends General<User> {
 	password?: string;
 
 	
-    @Column({ type: DataType.STRING(200), allowNull: true,
-        get(){
-           return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('photo')}` || ''; 
-       } })
-  	photo?: string;
+    // @Column({ type: DataType.STRING(200), allowNull: true,
+    //     get(){
+    //        return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('photo')}` || ''; 
+    //    } })
+	  // photo?: string;
+	  
+	  @HasMany(() => Image)
+	  images: Image[];
 
 	@BeforeCreate
 	static async setPassword(instance: User) {

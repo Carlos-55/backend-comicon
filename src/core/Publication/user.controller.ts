@@ -6,7 +6,6 @@ import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { generateStorageMulter, generateStorageUser } from '../../config/constants';
-import { Image } from '../../entities/images.entity';
 /**
  * Controller users
  */
@@ -23,7 +22,8 @@ export class UserController {
 		'birthdate',
 		'email',
 		'cellphone',
-		'password'
+		'password',
+		'photo'
 	];
 	constructor(private readonly users: UserService) {}
 	/**
@@ -32,8 +32,7 @@ export class UserController {
 	 */
 	@Get()
 	async getAll(): Promise<User[]> {
-		let data = await this.users.getAll({ 
-			attributes: this.attributes});
+		let data = await this.users.getAll({ attributes: this.attributes });
 		return data;
 	}
 
@@ -46,11 +45,7 @@ export class UserController {
 	@ApiBearerAuth()
 	@Get(':id')
 	async getById(@Param('id') id: number): Promise<User> {
-		let data = await this.users.getOne(id, { attributes: this.attributes,
-			include: [Image]
-		});
-		// console.log(data, '===================');
-		return data;
+		return await this.users.getOne(id, { attributes: this.attributes });
 	}
 
 	/**
@@ -69,18 +64,18 @@ export class UserController {
 	 * @returns update
 	 */
 	@Put(':id')
-	// @ApiConsumes('multipart/form-data')
-	// @UseInterceptors(
-	// 	FilesInterceptor('photo', 1, generateStorageMulter('images'),
-	// 	)
-	// )
-	async update(@Body() user: UserDTO,@Param('id') id: number, /*@UploadedFiles() photo*/): Promise<User> {
-		// console.log(user, '=====', photo);
-		// if (photo === undefined) {
-		// 	user.photo = "";
-		// 	return await this.users.update(user, id);
-		// }
-		// user.photo = photo[0] ? photo[0].filename : null
+	@ApiConsumes('multipart/form-data')
+	@UseInterceptors(
+		FilesInterceptor('photo', 1, generateStorageMulter('images'),
+		)
+	)
+	async update(@Body() user: UserDTO,@Param('id') id: number, @UploadedFiles() photo): Promise<User> {
+		console.log(user, '=====', photo);
+		if (photo === undefined) {
+			user.photo = "";
+			return await this.users.update(user, id);
+		}
+		user.photo = photo[0] ? photo[0].filename : null
 		return await this.users.update(user, id);
 	}
 	/**

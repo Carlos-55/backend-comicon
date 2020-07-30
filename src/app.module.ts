@@ -15,7 +15,7 @@ import { LoggerInterceptor } from './interceptors/logger.interceptor';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { InternalizationModule } from './modules-configs/internalization/internalization.module';
-
+import { ImagesModule } from './core/imageUser/image.module';
 
 /**
  * Module
@@ -62,7 +62,7 @@ import { InternalizationModule } from './modules-configs/internalization/interna
 		// RolModule,
 		ConfigModule,
 		HelpersModule,
-		// ImagesModule,
+		ImagesModule,
 		// CategoriesImagesModule,
 	],
 	controllers: [AppController],

@@ -1,6 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsNotEmpty, IsNumber } from 'class-validator';
-import { ImageDTO } from '../imageUser/image.dto';
 
 
 /**
@@ -43,7 +42,7 @@ export class UserDTO {
 	// @IsString({ message: 'Contraseña requerida' })
 	password?: string;
 
-	@ApiModelProperty({ description: ' Object image', required: false, type: ImageDTO})
-	images?: ImageDTO;
+	@ApiModelProperty({ description: 'photo to user DTO' })
+	photo?: string;
 }
 
