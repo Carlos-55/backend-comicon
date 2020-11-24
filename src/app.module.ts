@@ -1,3 +1,4 @@
+import { PublicationModule } from './core/Publication/publication.module';
 import { HttpModule, Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { MulterModule } from '@nestjs/platform-express';
@@ -59,7 +60,7 @@ import { ImagesModule } from './core/imageUser/image.module';
 		}),
 		UserModule,
 		AuthModule,
-		// RolModule,
+		PublicationModule,
 		ConfigModule,
 		HelpersModule,
 		ImagesModule,
