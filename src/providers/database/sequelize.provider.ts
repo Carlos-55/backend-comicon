@@ -1,9 +1,10 @@
+import { Message } from './../../entities/Message.entity';
 import { Sequelize } from 'sequelize-typescript';
 import { ConfigService } from '../../config/config.service';
 import { Logger } from '../../entities/Logger.entity';
 import { User } from '../../entities/User.entity';
 import { Pubication } from '../../entities/Publication.entity';
-import { Image } from '../../entities/images.entity'; 
+import { Image } from '../../entities/images.entity';
 
 
 
@@ -22,7 +23,7 @@ export const databaseProviders = [
 				password: _config.get('SEQUELIZE_PASSWORD'),
 				database: _config.get('SEQUELIZE_DATABASE'),
 			});
-			sequelize.addModels([Logger, User, Pubication, Image ]);
+			sequelize.addModels([Logger, User, Pubication, Image, Message ]);
 			await sequelize.sync();
 			return sequelize;
 		},
