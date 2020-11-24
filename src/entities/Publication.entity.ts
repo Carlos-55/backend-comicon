@@ -5,7 +5,7 @@ import { User } from "./User.entity";
 
 export enum CategoryComic{
 	ave = 'Aventura',
-	belic = 'Bélico', 
+	belic = 'Bélico',
 	humo = 'Humorístico',
 	costum = 'Costumbrista',
     depo = 'Deportivo',
@@ -16,14 +16,14 @@ export enum CategoryComic{
     terror = 'Manga'
 }
 
-// @DefaultScope(() => ({
-//     include : [
-//         {
-//             model: User,
-//             required:false
-//         }
-//     ]
-// }))
+@DefaultScope(() => ({
+    include : [
+        {
+            model: User,
+            required:false
+        }
+    ]
+}))
 @Table({
 	paranoid: true,
 	timestamps: true,
@@ -31,34 +31,31 @@ export enum CategoryComic{
 })
 export class Pubication extends General<Pubication>{
 
-    @Column({ type: DataType.STRING(50), allowNull: false })
-	name?: string;
-
     @Column({
         allowNull: false,
         get() {
             return moment(this.getDataValue('dayOfBirth')).format('DD/MM/YYYY');
         }
     })
-    datePublic: Date;
+    datePublic?: Date;
 
     @Column({ type: DataType.STRING(255), allowNull: true})
-    description: string;
+    description?: string;
 
-    @Column({ type: DataType.ENUM('Aventura','Bélico','Humorístico','Costumbrista','Deportivo','Fantástico','Historico','Policiaco','Romántico','Manga'), allowNull: false })
-	category: 'Aventura'|'Bélico'|'Humorístico'|'Costumbrista'|'Deportivo'|'Fantástico'|'Historico'|'Policiaco'|'Romántico'|'Manga'
+    // @Column({ type: DataType.ENUM('Aventura','Bélico','Humorístico','Costumbrista','Deportivo','Fantástico','Historico','Policiaco','Romántico','Manga'), allowNull: false })
+	// category?: 'Aventura'|'Bélico'|'Humorístico'|'Costumbrista'|'Deportivo'|'Fantástico'|'Historico'|'Policiaco'|'Romántico'|'Manga'
 
     @Column({ type: DataType.STRING(200), allowNull: false,
         get(){
-           return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('evidencie')}` || ''; 
+           return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('evidencie')}` || '';
        } })
    evidencie?: string;
 
     @ForeignKey(() => User)
     @Column({allowNull: false})
-    id_user: number;
+    id_user?: number;
 
     @BelongsTo(() => User)
-    user: User;
+    user?: User;
 
 }

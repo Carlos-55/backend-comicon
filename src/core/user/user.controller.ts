@@ -32,7 +32,7 @@ export class UserController {
 	 */
 	@Get()
 	async getAll(): Promise<User[]> {
-		let data = await this.users.getAll({ 
+		let data = await this.users.getAll({
 			attributes: this.attributes});
 		return data;
 	}
@@ -74,7 +74,8 @@ export class UserController {
 	// 	FilesInterceptor('photo', 1, generateStorageMulter('images'),
 	// 	)
 	// )
-	async update(@Body() user: UserDTO,@Param('id') id: number, /*@UploadedFiles() photo*/): Promise<User> {
+	async update(@Body() user: UserDTO, @Param('id') id: number, /*@UploadedFiles() photo*/): Promise<User> {
+		console.log(user, id)
 		// console.log(user, '=====', photo);
 		// if (photo === undefined) {
 		// 	user.photo = "";
