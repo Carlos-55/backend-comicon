@@ -6,23 +6,23 @@ export class MessageGateway implements OnGatewayInit, OnGatewayDisconnect, OnGat
 
   @WebSocketServer() server: Server;
 
-  
-  handleConnection(client: Client, ...args: any[]) {
-    console.log('Se conecto el usuario ' + client.id + ' ' + JSON.stringify(args))
+
+	handleConnection(client: Client, ...args: any[]) {
+    console.log('Se conecto el usuario ' + client.id + ' ' + JSON.stringify(args) + ' ' + client)
   }
 	/**
-   * Handles disconnect 
+   * Handles disconnect
    * @param client
 	 */
   handleDisconnect(client: any) {
-    console.log('Se desconecto el usuario ' + client.id)
+    console.log('Se desconecto el usuario ' + client.id, client)
   }
 	/**
 	 * After init
 	 * @param server
 	 */
   afterInit(server: any) {
-    // console.log('se inicio');
+    console.log('se inicio');
 
   }
 

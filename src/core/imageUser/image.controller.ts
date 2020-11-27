@@ -67,7 +67,7 @@ export class UserController {
 		photo.forEach(async (values) => {
 			await this.images.create({ ...image, photo: values.filename })
 		});
-		//@ts-ignore 
+		//@ts-ignore
 		return photo;
 		// image.photo = photo[0] ? photo[0].filename : null
 		//return await this.images.create(image);
@@ -88,9 +88,9 @@ export class UserController {
 		evidencie.forEach(async (values) => {
 			await this._docs.create({ ...pacient, historicalId: pacient.historicalId, evidencie: values.filename })
 		});
-		//@ts-ignore 
+		//@ts-ignore
 		return evidencie;
-	} 
+	}
 	 */
 	/**
 	 * Updates user controller
@@ -105,7 +105,6 @@ export class UserController {
 		)
 	)
 	async update(@Body() user: ImageDTO,@Param('id') id: number, @UploadedFiles() photo): Promise<Image> {
-		console.log(user, '=====', photo);
 		if (photo === undefined) {
 			user.photo = "";
 			return await this.images.update(user, id);

@@ -1,3 +1,4 @@
+import { Pubication } from './../../entities/Publication.entity';
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors, UploadedFiles, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { User } from '../../entities/User.entity';
@@ -47,7 +48,7 @@ export class UserController {
 	@Get(':id')
 	async getById(@Param('id') id: number): Promise<User> {
 		let data = await this.users.getOne(id, { attributes: this.attributes,
-			include: [Image]
+			include: [Image, Pubication]
 		});
 		// console.log(data, '===================');
 		return data;

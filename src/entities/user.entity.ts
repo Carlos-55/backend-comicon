@@ -1,17 +1,25 @@
+import { Message } from './Message.entity';
+import { Pubication } from './Publication.entity';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { BeforeCreate, BelongsTo, Column, DataType, DefaultScope, ForeignKey, Is, Table, HasMany } from 'sequelize-typescript';
 import { General } from './General.entity';
 import moment = require('moment');
-import {Image} from './images.entity';
+import { Image } from './images.entity';
 /**
  * Entity user
  */
 @DefaultScope(() => ({
-	include: [{
-		model: Image,
-		required: false
-	}]
+	include: [
+		{
+			model: Image,
+			required: false
+		},
+		// {
+		// 	model: Pubication,
+		// 	required: false
+		// }
+	]
 }))
 @Table({
 	paranoid: true,
@@ -21,7 +29,7 @@ import {Image} from './images.entity';
 export class User extends General<User> {
 	@Column({ type: DataType.STRING(50), allowNull: false })
 	name?: string;
-	
+
 	@Column({ type: DataType.STRING(50), allowNull: false })
 	paternSurname: string;
 
@@ -49,15 +57,20 @@ export class User extends General<User> {
 	@Column({ type: DataType.STRING(150), allowNull:false})
 	password?: string;
 
-	
+
     // @Column({ type: DataType.STRING(200), allowNull: true,
     //     get(){
-    //        return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('photo')}` || ''; 
+    //        return  `${process.env.HOST_COMPLETE}/uploads/images/${this.getDataValue('photo')}` || '';
     //    } })
 	  // photo?: string;
-	  
-	  @HasMany(() => Image)
-	  images: Image[];
+	@HasMany(() => Pubication)
+	publication: Pubication[];
+
+	@HasMany(() => Image)
+	images: Image[];
+
+	@HasMany(() => Message, 'from_id')
+	messagesSend: Message[];
 
 	@BeforeCreate
 	static async setPassword(instance: User) {

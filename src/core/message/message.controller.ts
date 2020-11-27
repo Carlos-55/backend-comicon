@@ -25,7 +25,13 @@ export class MessageController {
 	@Get('users')
 	async getAllUsers(@UserRequest('id') id: number) {
 		let data = await this.users.getAll({
-			attributes: ['id', 'name', 'paternSurname', 'maternSurname', 'rol', [sequelize.fn('COUNT', sequelize.col('messagesSend.id')), 'messages']],
+			attributes: [
+				'id',
+				'name',
+				'paternSurname',
+				'maternSurname',
+				[sequelize.fn('COUNT', sequelize.col('messagesSend.id')),'messages' ]
+			],
 			where: { [sequelize.Op.not]: { id } },
 			include: [
 				{
@@ -37,19 +43,13 @@ export class MessageController {
 			],
 			group: ['id']
 		})
+		// console.log(data)
 		return data
 		// 	.reduce((before: any, after: any) => {
-		// 	switch (after.rol) {
-		// 		case rolesEnum.admin:
-		// 			return { ...before, admins: [...before.admins, after] }
-		// 		case rolesEnum.doc:
-		// 			return { ...before, doctors: [...before.doctors, after] }
-		// 		case rolesEnum.rec:
-		// 			return { ...before, secretaries: [...before.secretaries, after] }
-		// 		default:
-		// 			return before
-		// 	}
-		// }, { admins: [], doctors: [], secretaries: [] })
+		// 			console.log('beforee ======>',before,  ' After ====>' ,after)
+		// 		return { ...before, user: [after]}
+		// 	},
+		// {})
 	}
 	// @Get(':id')
 	// async getById(@Param('id') id: number) {
@@ -73,11 +73,13 @@ export class MessageController {
 			},
 			order: [['createdAt', 'ASC']]
 		})
+		console.log(data)
 		return data
 	}
 
 	@Post()
 	async create(@Body() message: MessageDTO, @UserRequest('id') fromId: number) {
+		console.log(message, fromId)
 		let data = await this.messages.create({ ...message, fromId })
 		this.gateMessages.server.emit(`new/${message.toId}`, data);
 		return data

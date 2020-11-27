@@ -1,3 +1,4 @@
+import { MessageModule } from './core/message/message.module';
 import { PublicationModule } from './core/Publication/publication.module';
 import { HttpModule, Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
@@ -64,6 +65,7 @@ import { ImagesModule } from './core/imageUser/image.module';
 		ConfigModule,
 		HelpersModule,
 		ImagesModule,
+		MessageModule
 		// CategoriesImagesModule,
 	],
 	controllers: [AppController],

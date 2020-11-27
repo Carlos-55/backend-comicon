@@ -30,7 +30,7 @@ export class GateLoggerGateway
 	 */
 	handleConnection(client: Client, ...args: any[]) {
 		this.logger.log(
-			'Se conecto el usuario ' + client.id + ' ' + JSON.stringify(args),
+			'Se conecto el usuario ' + client.id + ' ' + JSON.stringify(args)
 		);
 	}
 	/**
@@ -44,7 +44,9 @@ export class GateLoggerGateway
 	 * After init
 	 * @param server
 	 */
-	afterInit(server: any) { }
+	afterInit(server: any) {
+		this.logger.log('Se inicio ' + server + ' ' + server);
+	 }
 
 	// @SubscribeMessage('message')
 	// handleMessage(client: any, payload: any): Observable<WsResponse<any>> {
